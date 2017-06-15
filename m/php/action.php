@@ -1774,7 +1774,8 @@ switch ($action) {
         $params['page'] = CommonClass::filter_input_init(INPUT_POST, 'page', FILTER_SANITIZE_MAGIC_QUOTES);
         $params['page'] = !empty($params['page']) && $params['page'] > 1 ? $params['page'] : 1;
         $params['count'] = CommonClass::filter_input_init(INPUT_POST, 'count', FILTER_SANITIZE_MAGIC_QUOTES);
-        $params['count'] = !empty($params['count']) && $params['count'] > 1 ? $params['count'] : 8;
+//        $params['count'] = !empty($params['count']) && $params['count'] > 1 ? $params['count'] : 8;
+        $params['count'] = !empty($params['count']) ? $params['count'] : 8;
         $params['start'] = ($params['page'] - 1) * $params['count'];
         $params['start_time'] = CommonClass::filter_input_init(INPUT_POST, 'start_time', FILTER_SANITIZE_MAGIC_QUOTES);
         $params['end_time'] = CommonClass::filter_input_init(INPUT_POST, 'end_time', FILTER_SANITIZE_MAGIC_QUOTES);
@@ -1789,6 +1790,17 @@ switch ($action) {
             $params['end_time'] = strtotime($params['end_time']);
         }
         $re = goto_center_api('getSpreadPromos', $params);
+        //####################################################################
+        $log_to_write = [
+            'start' => "\n########################################################",
+            'goto' => "getSpreadPromos \n ------------------------------------",
+            'input' => json_encode($params, JSON_UNESCAPED_UNICODE),
+            'result' => json_encode($re, JSON_UNESCAPED_UNICODE),
+            'end' => "\n ########################################################",
+            'level' => $action
+        ];
+        $log_write = log_args_write($log_to_write);
+        //#####################################################################
         if ($re['code'] == $objCode->success_get_spread_promos->code) {
             $re['data'] = json_decode($re['info'], TRUE);
         }

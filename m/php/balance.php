@@ -12,8 +12,8 @@ $re = prepare_goto_hprose($get_input, 'isLogin', $params);
 if ($re['code'] != $objCode->is_login_status->code) {//用户已经登出，或异常
 //    unset($re['info']);
     $re = [
-        'code'=> $objCode->is_not_login_status->code,
-        'errMsg'=>'请先登录'
+        'code' => $objCode->is_not_login_status->code,
+        'errMsg' => '请先登录'
     ];
     echo json_encode($re);
     die();
@@ -718,12 +718,20 @@ switch ($action) {
         $fromKeyType = CommonClass::filter_input_init(INPUT_POST, 'fromKeyType', FILTER_SANITIZE_MAGIC_QUOTES);
         if ($fromKeyType == 1) {//存提款
             for ($i = 10001; $i <= 10054; $i++) {
-                $fromKeyType .= $i . ',';
+                if ($fromKeyType == 1) {
+                    $fromKeyType = $i . ',';
+                } else {
+                    $fromKeyType .= $i . ',';
+                }
             }
             $fromKeyType = trim($fromKeyType, ',');
         } else if ($fromKeyType == 2) {//转账
             for ($i = 20001; $i <= 20014; $i++) {
-                $fromKeyType .= $i . ',';
+                if ($fromKeyType == 2) {
+                    $fromKeyType = $i . ',';
+                } else {
+                    $fromKeyType .= $i . ',';
+                }
             }
             $fromKeyType = trim($fromKeyType, ',');
         } else if ($fromKeyType == 3) {//返水
@@ -768,7 +776,19 @@ switch ($action) {
         }
         $paramsb['userInfoIsDetail'] = 1;
         //print_r($paramsb);
-        $res = $clientB->memberMoneyLog(json_encode($paramsb));
+//        $res = $clientB->memberMoneyLog(json_encode($paramsb));
+        $res = goto_coffee_mix('memberMoneyLog', $MY_TCP_MONEY_HOST, json_encode($paramsb));
+        //####################################################################
+        $log_to_write = [
+            'start' => "########################################################",
+            'goto swoole' => "memberMoneyLog \n ------------------------------------",
+            'input' => json_encode($paramsb, JSON_UNESCAPED_UNICODE),
+            'result' => $res,
+            'constant' => $MY_TCP_MONEY_HOST,
+            'level' => $action
+        ];
+        $log_write = log_args_write($log_to_write);
+        //#####################################################################
         $ret = json_decode($res, TRUE);
         if ($ret['code'] == '100000') {
             $return['data'] = [];

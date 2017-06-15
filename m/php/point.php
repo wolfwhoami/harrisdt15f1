@@ -84,6 +84,7 @@ switch ($action) {
             //####################################################################
             $log_to_write = [
                 'errMsg' => $result['errMsg'],
+                'params'=>$paramsb,
                 'code' => '1001',
                 'message' => '积分查询失败！',
                 'data' => json_encode($result, JSON_UNESCAPED_UNICODE),
