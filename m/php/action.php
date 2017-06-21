@@ -1092,9 +1092,10 @@ switch ($action) {
                     'site_id' => SITE_ID,
                     'username' => $par['username'],
                     'get_prize_time' => $par['add_time'],
-                    'end_time' => $par['end_time']
+                    'end_time' => $par['end_time'],
+                    'id'=>$id
                 ];
-                $usecodes = goto_center_api('getBonusUsecodes', $get_bonus_use_code_param);//统计已使用的打码量
+                $usecodes = goto_center_api('getBonusUsecodes_really_pickup', $get_bonus_use_code_param);//统计已使用的打码量
                 $usecodes = is_array($usecodes) ? 0 : $usecodes;
                 //####################################################################
                 $log_to_write = [

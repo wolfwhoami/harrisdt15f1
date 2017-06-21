@@ -253,7 +253,6 @@ switch ($action) {
         //$res = $clientB->getMoney(json_encode($paramsb));
         //$f->debug=true;
         $res = $f->CheckUsrBalance($paramsb);
-
         $result = json_decode($res, TRUE);
         $return = $result['code'] == '100000' ? [
             'code' => $objCode->success_to_get_main_money->code,
@@ -263,8 +262,19 @@ switch ($action) {
         ] : [
             'code' => $objCode->fail_to_get_main_money->code,
             'data' => $result,
-            'url' => $MY_HTTP_MONEY_HOST . 'getMoney'
         ];
+        if ($return != 100000) {
+            //####################################################################
+            $log_to_write = [
+                'start' => "###################获取余额##############################",
+                'url' => $MY_HTTP_MONEY_HOST . "getMoney \n ------------------------------------",
+                'input' => json_encode($paramsb, JSON_UNESCAPED_UNICODE),
+                'result' => json_encode($result, JSON_UNESCAPED_UNICODE),
+                'level' => $action
+            ];
+            $log_write = log_args_write($log_to_write);
+            //#####################################################################
+        }
         break;
     case 'ds':
         $return = [
