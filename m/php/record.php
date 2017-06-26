@@ -1138,6 +1138,7 @@ switch ($action) {
 
             $params['billno'] = $billno;
             $params['logstr'] = $logstrs;
+            $params['add_time'] = strtotime($limit['check_time']);
             $log_to_write = [
                 'params' => json_encode($params, JSON_UNESCAPED_UNICODE),
                 'paramsb' => json_encode($paramsb, JSON_UNESCAPED_UNICODE),

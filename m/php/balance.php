@@ -263,10 +263,10 @@ switch ($action) {
             'code' => $objCode->fail_to_get_main_money->code,
             'data' => $result,
         ];
-        if ($return != 100000) {
+        if ($result['code'] != 100000) {
             //####################################################################
             $log_to_write = [
-                'start' => "###################获取余额##############################",
+                '错误' => "###################获取余额失败##############################",
                 'url' => $MY_HTTP_MONEY_HOST . "getMoney \n ------------------------------------",
                 'input' => json_encode($paramsb, JSON_UNESCAPED_UNICODE),
                 'result' => json_encode($result, JSON_UNESCAPED_UNICODE),
