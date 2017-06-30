@@ -5,6 +5,7 @@ require_once("config.php");
 require_once("Short_hand.php");//common used class by common function
 require_once("api_common.php");//common function used in api
 require_once("payment_invoker.php");
+require_once("China_name_library/cn_lib.php");
 switch ($action) {
     case 'register'://会员注册
         $config = CommonClass::getSiteConfig($clientA);
@@ -2447,6 +2448,11 @@ switch ($action) {
         $re['site_id'] = SITE_ID;
         $re['SITE_TYPE'] = SITE_TYPE;
         $re['IMG_SITE_ID'] = IMG_SITE_ID;
+        break;
+    case 'china_name':
+        $name_obj = new ChinaName();
+        $name = $name_obj->getName();
+        $re['随机中文名']= $name;
         break;
     default:
         session_start();
