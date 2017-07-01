@@ -27,7 +27,7 @@ if ($validated !== true) {
     $pcmn['pcmn3'] = $pcmn_explode[2];
     $pcmn = $h_instance->sanitize($pcmn);
     $rules = [
-        'pcmn1' => 'required|numeric|max_len,4',
+        'pcmn1' => 'required|numeric|max_len,5',
         'pcmn2' => 'required|numeric|max_len,3',
         'pcmn3' => 'required|numeric|max_len,3',
     ];

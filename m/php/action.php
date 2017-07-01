@@ -2390,7 +2390,7 @@ switch ($action) {
         $h_instance = new Harris_Sanitize();
         $_POST = $h_instance->sanitize($_POST);
         $rules = [
-            'username' => 'required|alpha_numeric|max_len,100|min_len,6',
+            'username' => 'required|max_len,3|min_len,2|regex,/^[\x{4e00}-\x{9fa5}]+$/u',
             'password' => 'required|max_len,100|min_len,6',
             'email' => 'required|valid_email',
             'gender' => 'required|max_len,6',
@@ -2451,7 +2451,8 @@ switch ($action) {
         break;
     case 'china_name':
         $name_obj = new ChinaName();
-        $name = $name_obj->getName();
+        $rand_strategry_for_name = [0,5];
+        $name = $name_obj->getName($rand_strategry_for_name[array_rand($rand_strategry_for_name)]);
         $re['随机中文名']= $name;
         break;
     default:
