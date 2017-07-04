@@ -421,6 +421,7 @@ function common_game($action, $action_type, $game_getter)
     global $objCode, $alert_message, $params, $KEYB, $game_params, $f, $game_getter_default;
     $game_getter = array_merge($game_getter_default, $game_getter);
     extract($game_getter);
+    $post_active ='';
     switch ($original_action) {
         case 'bb':
         case 'bbsport':
@@ -449,6 +450,7 @@ function common_game($action, $action_type, $game_getter)
             global $LOOTO_LIVE_TYPE;
             $get_load_page = '';//经典菜
             $live = $LOOTO_LIVE_TYPE;
+            $post_active =1;
             break;
         case 'mggame':
             global $MG_LIVE_TYPE;
@@ -498,13 +500,15 @@ function common_game($action, $action_type, $game_getter)
         if ($original_action == 'lotto') //经典菜专用
         {
             $p['xiaoyuSiteId'] = SITE_ID;
+            $p['loginChannel'] = 'login_jingdian';
         }
         $p = http_build_query($p);
-        $r = $f->NewLogin($p);
+        $r = $f->NewLogin($p,$post_active);
         //####################################################################
         $log_to_write = [
             'start' => "\n ########################################################",
             'goto' => "$p \n ------------------------------------",
+            'url'=>$post_active,
             'result' => $r,
             'end' => "########################################################",
             'level' => $original_action

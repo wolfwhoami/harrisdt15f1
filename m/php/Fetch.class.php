@@ -128,12 +128,16 @@ class Fetch {
     /*
     * 新接口统一POST提交请求
     */
-    protected function NewPostData($url,$param) {
+    protected function NewPostData($url,$param,$post='') {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         //curl_setopt($ch, CURLOPT_TIMEOUT_MS,1);
+        if($post==1)
+        {
+            curl_setopt($ch, CURLOPT_POST, 1);
+        }
         curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
         $html_data = curl_exec($ch);
         $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -168,9 +172,10 @@ class Fetch {
         return $this->NewPostData($url,$params);
     }
 
-    public function NewLogin($params,$post='post') {
-        $url=$this->api_url.'login/';
-        return $this->NewPostData($url,$params);
+    public function NewLogin($params,&$post_active='') {
+        $post = $post_active;
+        $post_active = $url=$this->api_url.'login/';
+        return $this->NewPostData($url,$params,$post);
     }
     //-----------------------------------waterloopwm 2015-12-03 end-----------------------------------------
 
