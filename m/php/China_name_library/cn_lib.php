@@ -43,6 +43,16 @@ private function getMing()
 //    }
     return $this->arrMing[mt_rand(0,$this->numbMing-1)];
 }
+private function get_total_name()
+{
+    global $chinese_name_lib_path;
+    $files = glob($chinese_name_lib_path."/*.txt");
+    $file = array_rand($files);
+    $now_selected_file = $files[$file];
+    $data = file($now_selected_file, FILE_IGNORE_NEW_LINES);
+    $max = sizeof($data);
+    return $data[mt_rand(0,$max-1)];
+}
   // 获取名字
   public function getName($type=0)
   {
@@ -61,6 +71,9 @@ private function getMing()
             break;
         case 4: //只取名
             $name = $this->getMing();
+            break;
+        case 5: //从sougou库读取
+            $name = $this->get_total_name();
             break;
         case 0:
         default: //默认情况 1姓+2名
