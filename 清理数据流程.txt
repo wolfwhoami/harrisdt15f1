@@ -1,0 +1,44 @@
+---1.暂停生产数据
+	蛮牛PHP
+	蛮牛Java
+	蛮牛钱包报表(确定节点数量)
+
+---2.清理日志及缓存文件
+	蛮牛PHP
+	蛮牛Java
+	蛮牛钱包报表
+	
+---3.清理Redis
+	蛮牛PHPJava (172.25.254.1:6379)
+	蛮牛钱包报表
+
+---4.清理ActiveMQ
+	蛮牛Java
+	蛮牛钱包报表
+
+---5.清理PHP的数据	
+	172.25.10.94:3306
+	use ds88wc;
+	source ds88wc.sql;
+	
+---6.清理平台的数据
+	172.25.10.56:3306
+	use m_center;
+	source m_center.sql
+	use kakawan_center;
+	source kakawan_center.sql;
+
+---7.清理Java的数据
+	72.25.10.32:3306
+	use pc_game;
+	source pc_game_2017-06-30.sql;
+	use pc_game_record;
+	source pc_game_record_2017-06-30.sql;
+	
+8.清理图片站数据
+	清理图片站数据
+	
+9.启动生产数据
+	蛮牛全部启动
+
+	
