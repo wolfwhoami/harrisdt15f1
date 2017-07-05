@@ -521,8 +521,24 @@ function common_game($action, $action_type, $game_getter)
         }//判断是否连通
         $re = json_decode($r, TRUE);
         if ($re['status'] == 10000) {
-            //echo $re['message'];//ag,bb,h8
-            echo "<script>location.href='{$re['message']}';</script>"; //ag //bbgame,bbsport,lotto
+            if($original_action == 'lotto'){
+                $url=parse_url($re['message']);
+                $var=explode("&",$url['query']);
+                $arr = array();
+                foreach ($var as $val) {
+                    $x = explode('=', $val);
+                    if ($x[0] == 'param') {
+                        $x[1] = urldecode($x[1]);
+                    }
+                    $arr[$x[0]] = $x[1];
+                }
+                //$arr['loginIp'] = $ip;//现金网有，蛮牛暂时不传
+                $domain = !empty($domain) && CommonClass::check_url($domain) ? $domain : "{$url['scheme']}://{$url['host']}{$url['path']}";
+                echo CommonClass::buildForm($arr, $domain );
+            }else{
+                //echo $re['message'];//ag,bb,h8
+                echo "<script>location.href='{$re['message']}';</script>"; //ag //bbgame,bbsport,lotto
+            }
         } elseif ($re['status'] == 100020) { //bbgame 电子邮箱
             echo CommonClass::bbwait();
         } else if ($re['status'] == 100030) {//bb

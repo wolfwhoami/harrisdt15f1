@@ -680,6 +680,22 @@ function closewin() {
     {
         self::myLog('抛出异常：' . $exception->getMessage(), 'exception');
     }
+
+    /**
+     * 创建表单
+     * @data  表单内容
+     * @gateway 支付网关地址
+     */
+    static function buildForm($data, $gateway) {
+        $sHtml = "<form id='fromsubmit' name='fromsubmit' action='" . $gateway . "' method='post'>";
+        while (list ($key, $val) = each($data)) {
+            $sHtml.= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
+        }
+        $sHtml.= "</form>";
+        $sHtml.= "<script>document.forms['fromsubmit'].submit();</script>";
+
+        return $sHtml;
+    }
 }
 
 /*
