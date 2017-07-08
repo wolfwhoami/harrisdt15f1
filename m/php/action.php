@@ -1685,6 +1685,30 @@ switch ($action) {
             ];
             break;
         }
+        if (!empty($params['nickname'])){
+            $params_nick_post = [
+                'username' => $params['username'],
+                'oid' => $params['oid'],
+                'nickname' => $params['nickname'],
+                'company' => SITE_ID,
+            ];
+            $result_nick_name = goto_center_api('checkNickName', $params_nick_post);
+            if ($result_nick_name['code'] == 201707080) {
+                $re = [
+                    'code' => 201707080,
+                    'errMsg' => $result_nick_name['message'],
+                ];
+                break;
+            }
+            else{
+                $re = $result_nick_name;
+                if (isset($result_nick_name['message']))
+                {
+                    $re['errMsg']= $result_nick_name['message'];
+                    unset($re['message']);
+                }
+            }
+        }
         $re = goto_center_api('updateUserDetails', $params);
         $log_to_write = [
             'input' => json_encode($params, JSON_UNESCAPED_UNICODE),
