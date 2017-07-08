@@ -1678,7 +1678,7 @@ switch ($action) {
             ];
             break;
         }
-        if (!empty($params['nickname']) && !preg_match("/^[\x{4e00}-\x{9fa5}A-Za-z0-9]{2,8}$/u", $params['nickname'])) {
+        if (!empty($params['nickname']) && !preg_match("/^[\x{4e00}-\x{9fa5}A-Za-z0-9]{2,12}$/u", $params['nickname'])) {
             $re = [
                 'code' => $objCode->fail_to_reg->code,
                 'errMsg' => '昵称必须是2-8位的中文、字母和数字'
