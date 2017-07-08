@@ -1671,13 +1671,13 @@ switch ($action) {
                 break;
             }
         }
-        if (empty($params['email']) && empty($params['qq'])) {
-            $re = [
-                'code' => $objCode->fail_to_reg->code,
-                'errMsg' => '电子邮箱和QQ号至少填写一个'
-            ];
-            break;
-        }
+//        if (empty($params['email']) && empty($params['qq'])) {
+//            $re = [
+//                'code' => $objCode->fail_to_reg->code,
+//                'errMsg' => '电子邮箱和QQ号至少填写一个'
+//            ];
+//            break;
+//        }
         if (!empty($params['nickname']) && !preg_match("/^[\x{4e00}-\x{9fa5}A-Za-z0-9]{2,12}$/u", $params['nickname'])) {
             $re = [
                 'code' => $objCode->fail_to_reg->code,
